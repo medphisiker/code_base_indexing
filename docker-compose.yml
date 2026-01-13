@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  qdrant-indexing:
+    image: qdrant/qdrant:latest
+    container_name: qdrant-indexing
+    ports:
+      - "10500:6333"  # HTTP API
+      - "10501:6334"  # gRPC API
+    volumes:
+      - qdrant_indexing_storage:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__HTTP_PORT=6333
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    restart: unless-stopped
+    networks:
+      - indexing_network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-dev
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - indexing_network
+
+volumes:
+  qdrant_indexing_storage:
+    driver: local
+  ollama_data:
+    driver: local
+
+networks:
+  indexing_network:
+    driver: bridge

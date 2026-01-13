@@ -38,6 +38,7 @@ docker exec ollama-dev ollama pull nomic-embed-text
 
 ### Поставщик векторного хранилища (Qdrant)
 - **URL Qdrant**: `http://localhost:10500`
+- **Qdrant Dashborad**: `http://localhost:10500/dashboard`
 - **API-ключ Qdrant**: (необязательно, оставить пустым)
 
 ## Хранение данных
